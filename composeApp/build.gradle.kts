@@ -16,14 +16,7 @@ plugins {
 buildkonfig {
     packageName = "com.zaki.kotlibs"
     defaultConfigs {
-        val prop = Properties().apply {
-            load(FileInputStream(File(rootProject.rootDir, "local.properties")))
-        }
-        val reposUrl: String = prop.getProperty("REPOS_URL")
-        require(reposUrl.isNotEmpty()) {
-            "Give Path For Repo JSON and place it in local.properties as `REPOS_URL`"
-        }
-        buildConfigField(STRING, "REPOS_URL", reposUrl)
+        buildConfigField(STRING, "REPOS_URL", "https\\://iammohdzaki.github.io/kotlibs/repos.json")
     }
 }
 
