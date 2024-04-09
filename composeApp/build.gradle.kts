@@ -1,9 +1,6 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
-import java.io.File
-import java.io.FileInputStream
-import java.util.*
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -16,7 +13,7 @@ plugins {
 buildkonfig {
     packageName = "com.zaki.kotlibs"
     defaultConfigs {
-        buildConfigField(STRING, "REPOS_URL", "https\\://iammohdzaki.github.io/kotlibs/repos.json")
+        buildConfigField(STRING, "REPOS_URL", "https://iammohdzaki.github.io/kotlibs/repos.json")
     }
 }
 

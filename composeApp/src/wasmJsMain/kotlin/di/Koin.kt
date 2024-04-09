@@ -5,18 +5,9 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import org.koin.core.context.startKoin
-import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 import remote.KotLibApi
 import ui.KotLibViewModel
-
-fun initKoin(enableNetworkLogs: Boolean = false, appDeclaration: KoinAppDeclaration = {}) =
-    startKoin {
-        appDeclaration()
-        modules(commonModule(enableNetworkLogs = enableNetworkLogs))
-    }
-
 
 fun commonModule(enableNetworkLogs: Boolean = false) = module {
     single { createJson() }
