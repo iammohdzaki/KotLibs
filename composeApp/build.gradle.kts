@@ -49,6 +49,7 @@ kotlin {
             implementation(libs.voyager)
             implementation(libs.kmmViewModel)
             implementation(libs.koin.compose)
+            implementation(libs.kamel)
         }
     }
 }
