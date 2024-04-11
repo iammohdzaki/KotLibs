@@ -45,7 +45,7 @@ fun KotLibTheme(
     val colors = if (!useDarkTheme) {
         LightColors
     } else {
-        LightColors
+        DarkColors
     }
 
     MaterialTheme(

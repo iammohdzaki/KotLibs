@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -34,7 +35,10 @@ import org.koin.compose.koinInject
 import theme.Strings
 import theme.Styles
 import ui.components.CategoryView
+import ui.components.RepoView
 import ui.components.SearchBar
+import utils.Utils
+import utils.verticalScrollbar
 
 class RepoHomePage : Screen {
     @Composable
@@ -44,6 +48,8 @@ class RepoHomePage : Screen {
         val selectedCategory by viewModel.selectedCategory.collectAsState()
         val categories by viewModel.categories.collectAsState()
         val repos by viewModel.repoList.collectAsState()
+        val categoriesScrollState = rememberLazyListState()
+        val libScrollState = rememberLazyListState()
 
         if (isLoadingData) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
@@ -93,12 +99,15 @@ class RepoHomePage : Screen {
                         ) {
                             Text(
                                 text = Strings.CATEGORIES,
-                                style = Styles.TextStyleBold(16.sp),
+                                style = Styles.TextStyleBold(18.sp),
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(start = 10.dp, top = 10.dp)
                             )
                             Spacer(modifier = Modifier.size(10.dp))
-                            LazyColumn {
+                            LazyColumn(
+                                modifier = Modifier.verticalScrollbar(state = categoriesScrollState).fillMaxWidth(),
+                                state = categoriesScrollState
+                            ) {
                                 items(categories) { category ->
                                     CategoryView(
                                         category,
@@ -108,7 +117,7 @@ class RepoHomePage : Screen {
                                     }
                                 }
                             }
-                            Divider(color = Color.Gray, thickness = 1.dp)
+                            Divider(modifier = Modifier.width(1.dp).background(Color.Gray))
                         }
                         Column(
                             modifier = Modifier.weight(0.8f)
@@ -116,13 +125,19 @@ class RepoHomePage : Screen {
                         ) {
                             Text(
                                 text = Strings.Libraries,
-                                style = Styles.TextStyleBold(16.sp),
-                                fontWeight = FontWeight.Bold
+                                style = Styles.TextStyleBold(18.sp),
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(start = 10.dp, top = 10.dp)
                             )
-                            LazyColumn {
+                            Spacer(modifier = Modifier.size(10.dp))
+                            LazyColumn(
+                                modifier = Modifier.verticalScrollbar(state = libScrollState).fillMaxWidth(),
+                                state = libScrollState
+                            ) {
                                 items(repos) { repo ->
-                                    Text(repo.name)
-                                    Spacer(modifier = Modifier.size(10.dp))
+                                    RepoView(repo, onSelect = {
+                                        Utils.openInNewTab(repo.url)
+                                    })
                                 }
                             }
                         }
