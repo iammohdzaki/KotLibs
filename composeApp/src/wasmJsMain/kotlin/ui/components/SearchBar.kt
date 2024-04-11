@@ -10,7 +10,11 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
@@ -32,6 +36,7 @@ fun SearchBar(modifier: Modifier, onSearch: (String) -> Unit) {
             value = query,
             onValueChange = {
                 query = it
+                onSearch.invoke(query.text)
             },
             modifier = Modifier
                 .fillMaxWidth()

@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,7 +21,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +43,7 @@ class RepoHomePage : Screen {
         val isLoadingData by viewModel.isLoadingData.collectAsState()
         val selectedCategory by viewModel.selectedCategory.collectAsState()
         val categories by viewModel.categories.collectAsState()
+        val repos by viewModel.repoList.collectAsState()
 
         if (isLoadingData) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
@@ -81,8 +80,8 @@ class RepoHomePage : Screen {
                     Row {
                         Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.primary)) {
                             Spacer(modifier = Modifier.weight(0.2f))
-                            SearchBar(modifier = Modifier.weight(0.5f).padding(vertical = 30.dp)) {
-
+                            SearchBar(modifier = Modifier.weight(0.5f).padding(vertical = 30.dp)) { searchString ->
+                                viewModel.searchRepo(searchString)
                             }
                             Spacer(modifier = Modifier.weight(0.2f))
                         }
@@ -103,7 +102,7 @@ class RepoHomePage : Screen {
                                 items(categories) { category ->
                                     CategoryView(
                                         category,
-                                        category.name == (selectedCategory?.name ?: "All")
+                                        category.categoryId == (selectedCategory?.categoryId ?: -1)
                                     ) {
                                         viewModel.updateSelectedCategory(it)
                                     }
@@ -116,10 +115,16 @@ class RepoHomePage : Screen {
                                 .padding(12.dp)
                         ) {
                             Text(
-                                text = Strings.Libararies,
+                                text = Strings.Libraries,
                                 style = Styles.TextStyleBold(16.sp),
                                 fontWeight = FontWeight.Bold
                             )
+                            LazyColumn {
+                                items(repos) { repo ->
+                                    Text(repo.name)
+                                    Spacer(modifier = Modifier.size(10.dp))
+                                }
+                            }
                         }
                     }
                 }

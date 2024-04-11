@@ -5,6 +5,7 @@ import com.rickclephas.kmm.viewmodel.MutableStateFlow
 import com.rickclephas.kmm.viewmodel.coroutineScope
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import data.Category
+import data.RepoData
 import data.Repository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,6 +19,7 @@ class KotLibViewModel : KMMViewModel(), KoinComponent {
     private val kotLibApi: KotLibApi by inject()
     val isLoadingData = MutableStateFlow(viewModelScope, true)
 
+    private val _repoData = MutableStateFlow<RepoData?>(viewModelScope, null)
     private val _repoList = MutableStateFlow<List<Repository>>(viewModelScope, emptyList())
     private val _categories = MutableStateFlow<List<Category>>(viewModelScope, emptyList())
     private val _selectedCategory = MutableStateFlow<Category?>(viewModelScope, null)
@@ -34,16 +36,40 @@ class KotLibViewModel : KMMViewModel(), KoinComponent {
     init {
         isLoadingData.value = true
         viewModelScope.coroutineScope.launch {
-            delay(2000)
-            val reposResponse = kotLibApi.getReposData().categories
-            _categories.value = reposResponse
-            _repoList.value = reposResponse.flatMap { it.repos }
+            delay(1000)
+            _repoData.value = kotLibApi.getReposData()
+            _repoData.value?.let { it ->
+                _categories.value = it.categories
+                _repoList.value = it.repos
+                _selectedCategory.value = it.categories.find { it.categoryId == -1 }
+            }
             isLoadingData.value = false
+        }
+    }
+
+    private fun updateRepoList(category: Category) {
+        _repoData.value?.let { it ->
+            _repoList.value =
+                if (category.categoryId == -1) it.repos else it.repos.filter { it.categoryId == category.categoryId }
         }
     }
 
     fun updateSelectedCategory(category: Category) {
         _selectedCategory.value = category
+        updateRepoList(category)
     }
 
+    fun searchRepo(repoString: String) {
+        viewModelScope.coroutineScope.launch {
+            if (_repoData.value != null) {
+                delay(100)
+                _repoList.value = _repoData.value!!.repos.filter { repo ->
+                    repo.name.contains(repoString, ignoreCase = true) || repo.description.contains(
+                        repoString,
+                        ignoreCase = true
+                    )
+                }
+            }
+        }
+    }
 }
