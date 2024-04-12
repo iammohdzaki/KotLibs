@@ -22,18 +22,12 @@ jobs:
       - name: Run Gradle Tasks
         run: |
           chmod +x ./gradlew
-          ./gradlew wasmJsBrowserProductionWebpack
-
-      - name: Fix permissions
-        run: |
-          chmod -v -R +rX "build/dist/wasmJs/productionExecutable/" | while read line; do
-            echo "::warning title=Invalid file permissions automatically fixed::$line"
-          done
+          ./gradlew wasmJsBrowserDistribution
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: composeApp/build/kotlin-webpack/wasmJs/productionExecutable
+          path: composeApp/build/dist/wasmJs/productionExecutable
 
   deploy:
     # Add a dependency to the build job

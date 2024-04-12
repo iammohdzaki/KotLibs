@@ -16,8 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.browser.document
 import kotlinx.browser.window
 import theme.SansFont
+import theme.Strings
 
 suspend fun loadSansFont() {
     SansFont = FontFamily(
@@ -75,5 +77,15 @@ fun Modifier.verticalScrollbar(
 object Utils {
     fun openInNewTab(url: String) {
         window.open(url, "_blank")
+    }
+
+    fun setTabTitleAndIcon() {
+        document.title = "${Strings.APP_NAME} - ${Strings.APP_DES}"
+        val link = document.querySelector("link[rel~='icon']")
+            ?: document.createElement("link").apply {
+                setAttribute("rel", "icon")
+                document.head?.appendChild(this)
+            }
+        link.setAttribute("href", "https://play.kotlinlang.org/assets/favicon.ico")
     }
 }

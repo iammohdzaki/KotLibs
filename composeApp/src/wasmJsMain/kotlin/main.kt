@@ -8,11 +8,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.CanvasBasedWindow
+import utils.Utils
 import utils.loadSansFont
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     CanvasBasedWindow(canvasElementId = "ComposeTarget") {
+        Utils.setTabTitleAndIcon()
         var loadingResources: Boolean by remember { mutableStateOf(true) }
 
         if (loadingResources) {
