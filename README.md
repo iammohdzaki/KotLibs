@@ -1,19 +1,28 @@
-This is a Kotlin Multiplatform project targeting Web.
+# KotLibs
+[![🚀 Deploy to GitHub Pages](https://github.com/iammohdzaki/KotLibs/actions/workflows/build-and-publish-web.yml/badge.svg?branch=main)](https://github.com/iammohdzaki/KotLibs/actions/workflows/build-and-publish-web.yml)
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+KotLibs is a collection of Kotlin Multiplatform libraries built with KMP Web Assembly. 
+Check out : https://iammohdzaki.github.io/KotLibs/
 
+<p>
+    <a href="https://github.com/iammohdzaki/Kotlibs/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=%F0%9F%90%9B+Bug+Report%3A+">Report Bug</a>
+    ·
+    <a href="https://github.com/iammohdzaki/Kotlibs/issues/new?assignees=&labels=library-submit&projects=&template=submit_library.md&title=%F0%9F%9A%80+Submit+Library%3A+">Submit Library</a>
+</p>
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+<div align="center">
+<img src='https://github.com/iammohdzaki/KotLibs/blob/main/assets/img.png' alt="BundleTool-UI">
+</div>
 
-**Note:** Compose/Web is Experimental and may be changed at any time. Use it only for evaluation purposes.
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
+## Libraries Used
 
+- **ktor:** Ktor is an asynchronous framework for creating microservices, web applications and more. Written in Kotlin from the ground up.
+- **build-konfig:** - Similar to Android Build Config
+- **kamel:** - Image Loading Library
+- **voyager:** - Navigation Library for KMP
+
+### To Run Project
 You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+
+### Special Thanks - References
+https://github.com/joreilly/ClimateTraceKMP
