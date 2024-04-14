@@ -10,25 +10,40 @@ assignees: 'iammohdzaki'
 - Github Project Link 
 - Name to be shown
 - Description of your project
-- Tags (Select from these :  "Android","KMP","IOS","JVM","Web","IOS"). You can specify yours also.
+- Tags (Select from these :   
+  "android",
+  "ios",
+  "js",
+  "jvm",
+  "linux",
+  "mac",
+  "windows",
+  "tvos",
+  "watchos",
+  "windows"). You can specify yours also.
 - Select One Category from Below:
 
 |Category|
-|:--:|
-|Tooling|
-|Log|
-|Network|
-|Dependency Injection|
-|Architecture|
-|Analytics|
-|Test|
-|Crypto|
-|File|
-|Language extensions|
-|Serializer|
-|Compose UI|
-|Graphics|
-|Service SDK|
-|Arithmatic|
-|Resources|
-|Utils|
+- "Network"
+- "Repository"
+- "Serializer"
+- "Storage"
+- "DI"
+- "Image"
+- "Audio"
+- "Bluetooth"
+- "Reactive"
+- "Utility"
+- "Debug"
+- "Test"
+- "Annotation Processor"
+- "GUI"
+- "Command Line Interface"
+- "Firebase"
+- "Architecture"
+- "Docs"
+- "Build & Development Tools"
+- "Artificial Intelligence"
+- "Social"
+- "Math"
+
