@@ -10,5 +10,6 @@ class KotLibApi(
     private val client: HttpClient,
     private val reposUrl: String = BuildKonfig.REPOS_URL
 ) {
-    suspend fun getReposData() = client.get(reposUrl).body<RepoData>()
+    suspend fun getReposData() = client.get("$reposUrl/repos.json").body<RepoData>()
+    suspend fun getReposDataV2() = client.get("$reposUrl/repos_v2.json").body<RepoData>()
 }

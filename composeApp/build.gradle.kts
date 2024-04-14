@@ -13,7 +13,7 @@ plugins {
 buildkonfig {
     packageName = "com.zaki.kotlibs"
     defaultConfigs {
-        buildConfigField(STRING, "REPOS_URL", "https://iammohdzaki.github.io/kotlibs/repos.json")
+        buildConfigField(STRING, "REPOS_URL", "https://iammohdzaki.github.io/kotlibs")
     }
 }
 

@@ -102,7 +102,7 @@ class RepoHomePage : Screen {
                                 onClick = {
                                     Utils.openInNewTab("https://github.com/iammohdzaki/KotLibs")
                                 }
-                            ){
+                            ) {
                                 Text(
                                     text = Strings.GITHUB,
                                     style = Styles.TextStyleSemiBold(20.sp),
@@ -155,12 +155,24 @@ class RepoHomePage : Screen {
                             modifier = Modifier.weight(0.8f)
                                 .padding(12.dp)
                         ) {
-                            Text(
-                                text = Strings.Libraries,
-                                style = Styles.TextStyleBold(18.sp),
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(start = 10.dp, top = 10.dp)
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = Strings.Libraries,
+                                    style = Styles.TextStyleBold(18.sp),
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(start = 10.dp, top = 10.dp)
+                                )
+                                Text(
+                                    text = "${Strings.RESULTS}-${repos.size}",
+                                    style = Styles.TextStyleBold(16.sp),
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(end = 10.dp, top = 10.dp)
+                                )
+                            }
                             Spacer(modifier = Modifier.size(10.dp))
                             LazyColumn(
                                 modifier = Modifier.verticalScrollbar(state = libScrollState).fillMaxWidth(),

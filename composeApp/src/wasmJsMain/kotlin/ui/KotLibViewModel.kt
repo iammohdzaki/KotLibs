@@ -36,8 +36,8 @@ class KotLibViewModel : KMMViewModel(), KoinComponent {
     init {
         isLoadingData.value = true
         viewModelScope.coroutineScope.launch {
-            delay(1000)
-            _repoData.value = kotLibApi.getReposData()
+            delay(100)
+            _repoData.value = kotLibApi.getReposDataV2()
             _repoData.value?.let { it ->
                 _categories.value = it.categories
                 _repoList.value = it.repos
