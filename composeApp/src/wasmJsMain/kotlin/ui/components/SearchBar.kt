@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import theme.Styles
@@ -29,7 +28,7 @@ fun SearchBar(modifier: Modifier, onSearch: (String) -> Unit) {
     var query by remember { mutableStateOf(TextFieldValue()) }
 
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         OutlinedTextField(
@@ -39,8 +38,7 @@ fun SearchBar(modifier: Modifier, onSearch: (String) -> Unit) {
                 onSearch.invoke(query.text)
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+                .fillMaxWidth(),
             singleLine = true,
             textStyle = Styles.TextStyleMedium(16.sp),
             shape = MaterialTheme.shapes.small,

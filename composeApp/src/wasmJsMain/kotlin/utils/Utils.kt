@@ -89,3 +89,9 @@ object Utils {
         link.setAttribute("href", "https://play.kotlinlang.org/assets/favicon.ico")
     }
 }
+
+object Links{
+    const val GITHUB_URL = "https://github.com/iammohdzaki/KotLibs"
+    const val SUBMIT_LIBRARY = "https://github.com/iammohdzaki/Kotlibs/issues/new?assignees=&labels=library-submit&projects=&template=submit_library.md&title=%F0%9F%9A%80+Submit+Library%3A+"
+    const val SUBMIT_ISSUE = "https://github.com/iammohdzaki/Kotlibs/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=%F0%9F%90%9B+Bug+Report%3A+"
+}

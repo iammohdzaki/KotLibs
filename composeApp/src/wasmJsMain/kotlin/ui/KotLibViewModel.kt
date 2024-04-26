@@ -47,7 +47,7 @@ class KotLibViewModel : KMMViewModel(), KoinComponent {
         }
     }
 
-    private fun updateRepoList(category: Category) {
+    private fun updateRepoListForCategory(category: Category) {
         _repoData.value?.let { it ->
             _repoList.value =
                 if (category.categoryId == -1) it.repos else it.repos.filter { it.categoryId == category.categoryId }
@@ -56,7 +56,7 @@ class KotLibViewModel : KMMViewModel(), KoinComponent {
 
     fun updateSelectedCategory(category: Category) {
         _selectedCategory.value = category
-        updateRepoList(category)
+        updateRepoListForCategory(category)
     }
 
     fun searchRepo(repoString: String) {
