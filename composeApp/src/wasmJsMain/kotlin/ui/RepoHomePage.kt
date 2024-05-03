@@ -2,6 +2,7 @@ package ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,9 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
-import io.ktor.http.*
 import kotlibs.composeapp.generated.resources.Res
 import kotlibs.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -43,8 +41,10 @@ import org.koin.compose.koinInject
 import theme.Strings
 import theme.Styles
 import ui.components.CategoryView
+import ui.components.EmptyRepoView
 import ui.components.RepoView
 import ui.components.SearchBar
+import utils.Links
 import utils.Utils
 import utils.verticalScrollbar
 
@@ -73,17 +73,11 @@ class RepoHomePage : Screen {
                             .padding(start = 24.dp, top = 10.dp, bottom = 10.dp, end = 24.dp)
                             .wrapContentHeight()
                             .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Row {
-                            /*KamelImage(
-                                resource = asyncPainterResource(
-                                    data = Url("drawable/logo.png")
-                                ),
-                                modifier = Modifier.width(30.dp).height(30.dp),
-                                contentDescription = ""
-                            )*/
+                        Row(
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
                             Image(
                                 painter = painterResource(Res.drawable.logo),
                                 modifier = Modifier.width(30.dp).height(30.dp),
@@ -96,11 +90,48 @@ class RepoHomePage : Screen {
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colors.onPrimary
                             )
+                            Spacer(modifier = Modifier.size(10.dp))
+                            SearchBar(
+                                modifier = Modifier.weight(0.2f).wrapContentHeight()
+                            ) { searchString ->
+                                viewModel.searchRepo(searchString)
+                            }
                         }
-                        Row {
+                        Row(
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            Text(
+                                text = Strings.PROJECTS,
+                                style = Styles.TextStyleSemiBold(16.sp),
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colors.onPrimary
+                            )
+                            Spacer(modifier = Modifier.size(14.dp))
+                            Text(
+                                text = Strings.SUBMIT_LIBRARY,
+                                style = Styles.TextStyleSemiBold(16.sp),
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colors.onPrimary,
+                                modifier = Modifier.clickable {
+                                    Utils.openInNewTab(Links.SUBMIT_LIBRARY)
+                                }
+                            )
+                            Spacer(modifier = Modifier.size(14.dp))
+                            Text(
+                                text = Strings.REPORT_BUG,
+                                style = Styles.TextStyleSemiBold(16.sp),
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colors.onPrimary,
+                                modifier = Modifier.clickable {
+                                    Utils.openInNewTab(Links.SUBMIT_ISSUE)
+                                }
+                            )
+                            Spacer(modifier = Modifier.size(14.dp))
                             Button(
                                 onClick = {
-                                    Utils.openInNewTab("https://github.com/iammohdzaki/KotLibs")
+                                    Utils.openInNewTab(Links.GITHUB_URL)
                                 }
                             ) {
                                 Text(
@@ -115,15 +146,6 @@ class RepoHomePage : Screen {
                 }
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    Row {
-                        Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.primary)) {
-                            Spacer(modifier = Modifier.weight(0.2f))
-                            SearchBar(modifier = Modifier.weight(0.5f).padding(vertical = 30.dp)) { searchString ->
-                                viewModel.searchRepo(searchString)
-                            }
-                            Spacer(modifier = Modifier.weight(0.2f))
-                        }
-                    }
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Column(
                             modifier = Modifier.weight(0.2f)
@@ -161,7 +183,7 @@ class RepoHomePage : Screen {
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = Strings.Libraries,
+                                    text = Strings.LIBRARIES,
                                     style = Styles.TextStyleBold(18.sp),
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(start = 10.dp, top = 10.dp)
@@ -174,15 +196,19 @@ class RepoHomePage : Screen {
                                 )
                             }
                             Spacer(modifier = Modifier.size(10.dp))
-                            LazyColumn(
-                                modifier = Modifier.verticalScrollbar(state = libScrollState).fillMaxWidth(),
-                                state = libScrollState
-                            ) {
-                                items(repos) { repo ->
-                                    RepoView(repo, onSelect = {
-                                        Utils.openInNewTab(repo.url)
-                                    })
+                            if (repos.isNotEmpty()) {
+                                LazyColumn(
+                                    modifier = Modifier.verticalScrollbar(state = libScrollState).fillMaxWidth(),
+                                    state = libScrollState
+                                ) {
+                                    items(repos) { repo ->
+                                        RepoView(repo, onSelect = {
+                                            Utils.openInNewTab(repo.url)
+                                        })
+                                    }
                                 }
+                            } else {
+                                EmptyRepoView()
                             }
                         }
                     }
